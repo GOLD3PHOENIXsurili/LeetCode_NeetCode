@@ -50,3 +50,44 @@ class Solution:
             return f",{root.val},{serialize(root.left)},{serialize(root.right)}"
 
         return serialize(subRoot) in serialize(root)
+
+
+
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        
+        subtree_hashes = set()
+
+        def hash_tree(node):
+            if not node:
+                return "null"
+            
+            left = hash_tree(node.left)
+            right = hash_tree(node.right)
+
+            h = f"{node.val},{left},{right}"
+            subtree_hashes.add(h)
+            return h
+
+        # build hashes from root
+        hash_tree(root)
+
+        # separate function (no adding)
+        def get_hash(node):
+            if not node:
+                return "null"
+            
+            left = get_hash(node.left)
+            right = get_hash(node.right)
+
+            return f"{node.val},{left},{right}"
+
+        return get_hash(subRoot) in subtree_hashes
