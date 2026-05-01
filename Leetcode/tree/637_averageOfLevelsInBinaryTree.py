@@ -25,3 +25,4 @@ class Solution:
             avgs.append(avg)
         
         return avgs
+    
