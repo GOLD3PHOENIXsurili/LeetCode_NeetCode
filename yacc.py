@@ -1,23 +1,25 @@
-def evaluate(expr):
-    try:
-        result = eval(expr)
-        return result
-    except:
-        return "Invalid Expression"
+t = int(input())
 
-# main function
-expr = input("Enter the arithmetic: ")
-allowed = "0123456789+-*/(). "
+for _ in range(t):
+    n = int(input())
+    a = list(map(int, input().split()))
 
-valid = True
-for ch in expr:
-    if ch not in allowed:
-        valid = False
-        break
+    possible = True
+    prev = 0
 
-if not valid:
-    print("Invalid Expression")
-else:
-    result = evaluate(expr)
-    print("Resukt: ",result)
-    
+    for i in range(n - 1):
+        need = prev + 1
+
+        if a[i] < need:
+            possible = False
+            break
+
+        extra = a[i] - need
+        a[i + 1] += extra
+        prev = need
+
+    if possible and a[-1] > prev:
+        print("YES")
+    else:
+        print("NO")
+
